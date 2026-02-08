@@ -90,20 +90,6 @@ export default function ProductEditor({ project }: { project: Project }) {
             </div>
           </div>
 
-          <div className="flex gap-4">
-            <button
-              onClick={handleSave}
-              disabled={loading}
-              className="rounded-md bg-primary px-6 py-3 text-white hover:opacity-90 disabled:opacity-50"
-            >
-              {loading ? "Saving..." : "Save Changes"}
-            </button>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-}
           <div className="rounded-lg bg-white p-6 shadow">
             <h2 className="mb-4 text-lg font-semibold">Product Images</h2>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -130,3 +116,18 @@ export default function ProductEditor({ project }: { project: Project }) {
               ))}
             </div>
           </div>
+
+          <div className="flex gap-4">
+            <button
+              onClick={handleSave}
+              disabled={loading}
+              className="rounded-md bg-primary px-6 py-3 text-white hover:opacity-90 disabled:opacity-50"
+            >
+              {loading ? "Saving..." : "Save Changes"}
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
