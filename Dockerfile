@@ -46,10 +46,18 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh ./
+USER root
+RUN chmod +x docker-entrypoint.sh
 
 # Create uploads directory
 RUN mkdir -p /app/public/uploads/audio /app/public/uploads/videos
 RUN chown -R nextjs:nodejs /app/public/uploads
+RUN chown nextjs:nodejs /app/docker-entrypoint.sh
 
 USER nextjs
 
@@ -57,4 +65,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["node", "server.js"]
+CMD ["./docker-entrypoint.sh"]
