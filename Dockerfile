@@ -18,8 +18,16 @@ COPY . .
 # Generate Prisma Client
 RUN npx prisma generate
 
+# Build arguments for Next.js build
+ARG NEXTAUTH_URL
+ARG NEXTAUTH_SECRET
+ARG DATABASE_URL
+
 # Build Next.js
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXTAUTH_URL=${NEXTAUTH_URL}
+ENV NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+ENV DATABASE_URL=${DATABASE_URL}
 RUN npm run build
 
 # Production image

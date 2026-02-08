@@ -20,6 +20,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXTAUTH_URL: ${NEXTAUTH_URL}
+        NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+        DATABASE_URL: postgresql://affvideogen:${DB_PASSWORD}@postgres:5432/affvideogen
     container_name: affvideogen-app
     restart: unless-stopped
     ports:
