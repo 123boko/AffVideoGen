@@ -36,7 +36,7 @@ export async function scrapeShopee(url: string) {
     await page.goto(mobileUrl, { waitUntil: "networkidle2", timeout: 60000 });
 
     // Wait for content to load
-    await page.waitForTimeout(3000);
+    await new Promise(resolve => setTimeout(resolve, 3000));
 
     const data = await page.evaluate(() => {
       // Try multiple selectors for title
