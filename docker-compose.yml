@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: affvideogen-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: affvideogen
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: affvideogen
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: affvideogen-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://affvideogen:${DB_PASSWORD}@postgres:5432/affvideogen
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      ELEVENLABS_API_KEY: ${ELEVENLABS_API_KEY}
+    depends_on:
+      - postgres
+    volumes:
+      - uploads:/app/public/uploads
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+  uploads:
+
+networks:
+  app-network:
+    driver: bridge
