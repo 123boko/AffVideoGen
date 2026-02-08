@@ -34,8 +34,21 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-# Install OpenSSL for Prisma
-RUN apk add --no-cache openssl openssl-dev libc6-compat
+# Install OpenSSL for Prisma and Chromium for Puppeteer
+RUN apk add --no-cache \
+    openssl \
+    openssl-dev \
+    libc6-compat \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
+
+# Set Puppeteer environment variables
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
