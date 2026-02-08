@@ -34,6 +34,9 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
+# Install OpenSSL for Prisma
+RUN apk add --no-cache openssl openssl-dev libc6-compat
+
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
