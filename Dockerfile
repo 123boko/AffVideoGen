@@ -62,6 +62,12 @@ RUN mkdir -p /app/public/uploads/audio /app/public/uploads/videos
 RUN chown -R nextjs:nodejs /app/public/uploads
 RUN chown nextjs:nodejs /app/docker-entrypoint.sh
 
+# Fix permissions for Prisma
+RUN chown -R nextjs:nodejs /app/node_modules/.prisma
+RUN chown -R nextjs:nodejs /app/node_modules/@prisma
+RUN chown -R nextjs:nodejs /app/node_modules/prisma
+RUN chown -R nextjs:nodejs /app/prisma
+
 USER nextjs
 
 EXPOSE 3000
