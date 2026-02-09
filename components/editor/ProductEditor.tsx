@@ -13,9 +13,9 @@ interface Project {
   status: string;
   aiCaption: string | null;
   aiDescription: string | null;
-  aiHashtags: string | null;
+  aiHashtags: string[];
   aiVoiceOver: string | null;
-  aiVideoPrompt: string | null;
+  aiVideoPrompt: unknown;
   audioUrl: string | null;
   videoUrl: string | null;
 }
@@ -230,7 +230,11 @@ export default function ProductEditor({ project }: { project: Project }) {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Hashtags</label>
-                  <p className="rounded-md bg-gray-50 p-3 text-sm">{aiContent.hashtags}</p>
+                  <div className="rounded-md bg-gray-50 p-3 text-sm flex flex-wrap gap-2">
+                    {aiContent.hashtags.map((tag, i) => (
+                      <span key={i} className="bg-blue-100 text-blue-800 px-2 py-1 rounded">{tag}</span>
+                    ))}
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Voice Over Script</label>
@@ -238,7 +242,7 @@ export default function ProductEditor({ project }: { project: Project }) {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Video Prompt</label>
-                  <p className="rounded-md bg-gray-50 p-3 text-sm whitespace-pre-wrap">{aiContent.videoPrompt}</p>
+                  <p className="rounded-md bg-gray-50 p-3 text-sm whitespace-pre-wrap">{typeof aiContent.videoPrompt === 'string' ? aiContent.videoPrompt : JSON.stringify(aiContent.videoPrompt, null, 2)}</p>
                 </div>
               </div>
 
