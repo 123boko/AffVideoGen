@@ -29,11 +29,14 @@ export async function scrapeShopee(url: string): Promise<ScrapeResult> {
   const browser = await puppeteer.launch({
     headless: true,
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    protocolTimeout: 180000,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
       "--disable-blink-features=AutomationControlled",
+      "--disable-gpu",
+      "--single-process",
     ],
   });
   log("Browser launched successfully");
